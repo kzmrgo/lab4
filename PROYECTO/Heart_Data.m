@@ -1,0 +1,74 @@
+% Leer los datos
+heart_data = readtable("heart_data");
+
+% Convertir edad de días a años
+heart_data.age = round(heart_data.age / 365.25);
+
+% Definir las variables binarias y sus correspondientes etiquetas
+binary_variables = {'smoke', 'active', 'alco', 'cardio'};
+binary_labels = {'No', 'Si'};
+
+% Iterar sobre las variables binarias y realizar la conversión
+for i = 1:length(binary_variables)
+    var_name = binary_variables{i};
+    heart_data.(var_name) = categorical(heart_data.(var_name), [0, 1], binary_labels);
+end
+
+% Mostrar los datos procesados
+disp(heart_data);
+
+% Calcular el IMC para cada individuo
+IMC = heart_data.weight ./ (heart_data.height/100).^2; % Convertir altura a metros
+
+% Inicializar la variable de clasificación del IMC
+clasificacion_IMC = cell(size(IMC));
+
+% Clasificar el IMC según los estándares de la OMS utilizando if
+for i = 1:numel(IMC)
+    if IMC(i) < 18.5
+        clasificacion_IMC{i} = 'Peso insuficiente';
+    elseif IMC(i) < 25
+        clasificacion_IMC{i} = 'Peso normal o saludable';
+    elseif IMC(i) < 30
+        clasificacion_IMC{i} = 'Sobrepeso';
+    else
+        clasificacion_IMC{i} = 'Obesidad';
+    end
+end
+
+% Mostrar los datos con el IMC y la clasificación
+disp(table(heart_data.weight, heart_data.height, IMC, clasificacion_IMC));
+
+PresionAM = (heart_data.ap_lo*2)+heart_data.ap_hi/3
+% Lee la base de datos
+datos = readtable('heart_data.csv'); % Ajusta el nombre y la ubicación de tu base de datos
+
+% Extrae las edades de la columna 'age' de la base de datos
+edades = heart_data.age;
+
+% Definimos los nuevos rangos de edad
+rangos = [0, 18, 30, 45, 60, inf];
+
+% Inicializamos las variables para cada rango
+rango_0_18 = 0;
+rango_19_30 = 0;
+rango_31_45 = 0;
+rango_46_60 = 0;
+rango_61_mas = 0;
+
+% Contamos el número de personas en cada rango de edad
+conteos = histcounts(edades, rangos);
+
+% Asignamos los conteos a las variables
+rango_0_18 = conteos(1);
+rango_19_30 = conteos(2);
+rango_31_45 = conteos(3);
+rango_46_60 = conteos(4);
+rango_61_mas = conteos(5);
+
+% Mostramos los resultados
+disp(['Personas en el rango 0-18: ', num2str(rango_0_18)]);
+disp(['Personas en el rango 19-30: ', num2str(rango_19_30)]);
+disp(['Personas en el rango 31-45: ', num2str(rango_31_45)]);
+disp(['Personas en el rango 46-60: ', num2str(rango_46_60)]);
+disp(['Personas en el rango 61 en adelante: ', num2str(rango_61_mas)]);
