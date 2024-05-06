@@ -6,6 +6,6 @@ Este repositorio contiene el proyecto realizado para la guía 4 de simulación c
 
 Por favor, siéntete libre de explorar los archivos y, si tienes alguna pregunta o sugerencia, no dudes en ponerte en contacto con nosotras.
 
-¡Gracias por tu interés!
+¡Graciass!
 
 [Laura Diaz & Leidy Aguirre]
